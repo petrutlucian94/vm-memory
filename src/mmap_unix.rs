@@ -8,8 +8,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the THIRD-PARTY file.
 
-//! A default implementation of the GuestMemory trait by mmap()-ing guest's memory into the current
-//! process.
+//! A default Unix implementation of the GuestMemory trait by mmap()-ing guest's memory into
+//! the current process.
 //!
 //! The main structs to access guest's memory are:
 //! - [MmapRegion](struct.MmapRegion.html): mmap a continuous region of guest's memory into the

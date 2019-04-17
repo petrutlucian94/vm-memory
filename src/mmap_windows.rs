@@ -1,15 +1,8 @@
-// Copyright (C) 2019 Alibaba Cloud Computing. All rights reserved.
+// Copyright (C) 2019 CrowdStrike, Inc. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 //
-// Portions Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-// SPDX-License-Identifier: Apache-2.0
-//
-// Portions Copyright 2017 The Chromium OS Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the THIRD-PARTY file.
 
-//! A default implementation of the GuestMemory trait by mmap()-ing guest's memory into the current
-//! process.
+//! A default Windows implementation of the GuestMemory trait using VirtualAlloc() and MapViewOfFile().
 //!
 //! The main structs to access guest's memory are:
 //! - [MmapRegion](struct.MmapRegion.html): mmap a continuous region of guest's memory into the
