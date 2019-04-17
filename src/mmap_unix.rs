@@ -159,3 +159,16 @@ impl Drop for MmapRegion {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use mmap_unix::MmapRegion;
+    use std::os::unix::io::FromRawFd;
+
+    #[test]
+    fn map_invalid_fd() {
+        let fd = unsafe { std::fs::File::from_raw_fd(-1) };
+        let e = MmapRegion::from_fd(&fd, 1024, 0).unwrap_err();
+        assert_eq!(e.raw_os_error(), Some(libc::EBADF));
+    }
+}

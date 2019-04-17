@@ -395,10 +395,6 @@ mod tests {
     use super::*;
     use std::fs::File;
     use std::mem;
-    #[cfg(unix)]
-    use std::os::unix::io::FromRawFd;
-    #[cfg(windows)]
-    use std::os::windows::io::FromRawHandle;
     use std::path::Path;
 
     use Bytes;
@@ -410,35 +406,9 @@ mod tests {
     }
 
     #[test]
-    #[cfg(unix)]
     fn map_invalid_size() {
         let e = MmapRegion::new(0).unwrap_err();
         assert_eq!(e.raw_os_error(), Some(libc::EINVAL));
-    }
-
-    #[test]
-    #[cfg(windows)]
-    fn map_invalid_size() {
-        use mmap_windows::ERROR_INVALID_PARAMETER;
-        let e = MmapRegion::new(0).unwrap_err();
-        assert_eq!(e.raw_os_error(), Some(ERROR_INVALID_PARAMETER));
-    }
-
-    #[test]
-    #[cfg(unix)]
-    fn map_invalid_fd() {
-        let fd = unsafe { std::fs::File::from_raw_fd(-1) };
-        let e = MmapRegion::from_fd(&fd, 1024, 0).unwrap_err();
-        assert_eq!(e.raw_os_error(), Some(libc::EBADF));
-    }
-
-    #[test]
-    #[cfg(windows)]
-    fn map_invalid_handle() {
-        use mmap_windows::INVALID_HANDLE;
-        let fd = unsafe { std::fs::File::from_raw_handle(INVALID_HANDLE) };
-        let e = MmapRegion::from_fd(&fd, 1024, 0).unwrap_err();
-        assert_eq!(e.raw_os_error(), Some(libc::EBADF));
     }
 
     #[test]
